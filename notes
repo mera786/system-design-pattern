@@ -1,0 +1,196 @@
+🔷 What is System Design ?
+system design , designing day to day tech system jaise, whatsapp,instagram,uber. aise hee chijo ko thing krna market ke according or design krna.
+System Design Pattern ek proven architectural solution hota hai jo large-scale software systems ki common problems solve karta hai
+jaise:
+ - scalability
+ - maintainability
+ - availability
+ - fault tolerance
+ - performance
+Ye code-level pattern (Singleton, Factory) se bada hota hai,Ye poore system ka structure define karta hai.
+
+                                                        System Design 
+                                             ______________|    |____________
+                                            |                                |
+                        HLD ________________|                                |_________________ LLD
+High level Desing :
+iske ander hum over view of the system ko design krte hai
+- for eg - agr whatsapp design krna hai to kon sa database use kr rhe honge, message queue ko use krenge,cache etc.
+- system ke different-different component ko btate hai ki , kis trh se design hoga. isme koi code nhi krna hota
+
+Low level Desgin:
+actual machine coding krni hoti hai jaise:
+- design API
+- class diagram v bnate hai
+- models ko v btate hai
+
+let's assume apko netflix jaise system ko / netflix ko design krna hai: jisme millions of people video ko watch kr paye across different simultineously.
+isko requirment ko smjhne ke liye or ache se hme 2 chijo ko smjhna pdega:
+(1) functional requirment :- exact kon sa feature ko build krne ki jarurt hai jise user aa ke use kr ske. jaise:
+- users can signup & login
+- users can buy a subscription
+- user can play & pause the video.
+(2) non-functional requirment :- hmara system kis tarike se perform krega,uske ander kya kya qualities hogi,jaise:
+- secure system with authentication / autherization 
+- low latency for video ( video play hone me jyda time n lge).
+- scalable system ( millions of user watch kr paye).
+
+High level Desgin : step by step component/concept to learn 
+steps 1 : fundamentals
+- serverless vs serverfull
+- horizental vs vertical scalling
+- what are threads?
+- what are pages?
+- how does the internet works?
+step 2 : databases
+- sql vs noSQL dbs 
+- in memory dbs
+- data replication & migration
+- data partitioning
+- sharding
+step 3: consistency vs availability
+- data consistency & its levels
+- isolation & its levels
+- CAP theorem
+step 4 : cache
+- what is cache ( redis,memcahed)
+- write policies : write back , through & around
+- replacement Policies : LFU,LRU , segmented LRU etc.
+- content delivery networks (CDNs).
+step 5 : networking
+- TCP vs UDP
+- what is http (1/2/3) & https
+- websockets
+- webRTC & video streaming
+step 6 : load balancers
+- load balancing algorithms ( stateless & stateful )
+- consistent hashing
+- proxy & reverse proxy
+- rate limiting
+step 7 : message queue
+- asynchrous processing ( kafka , rabbit mq)
+- publisher - subscriber model
+step 8 : monoliths vs microservices 
+- why microservices
+- concept of 'single point of failure'
+- avoiding cascading failures
+- containerization (Docker)
+- migerating to microservices
+step 9 : monitoring & logging
+- logging events & monitoring metrics
+- anomaly detection
+step 10 : security 
+- token for auth
+- sso & oAuth
+- access control lists & rule engines
+- encryption
+step 11 : system desing tradeoffs
+- push vs pull architecture
+- consistency vs availability
+- sql vs no-sql dbs
+- memory vs latency
+- throughput vs latency
+- accuracy vs latency
+step 12 : practice popular platform
+- instagram 
+-youtube
+- tweeter
+- netflix
+- user etc.
+
+low level design :  
+step 1 : oops programming
+- encapsulation 
+- abstraction
+- inheritance
+- polymorphism
+- solid principles
+step 2 : design pattern 
+- creational desing pattern ( single, factory etc.)
+- structural ( proxy, bridge etc)
+- behavioral ( strategy , command, observer etc.)
+step 3 : concurrency & thread safety 
+- thread safe injection
+- locking mechanism
+- producer-consumer
+- race condition & synchronization
+step 4 : UML diagrams
+step 5 : APIs
+- api design
+- request/response object modeling
+- versioning & extensibility
+- clean code principles : DRY,SRP etc.
+- Avoiding God classes
+
+API Gateway – HLD:
+
+Single entry point
+
+Routing
+
+Auth
+
+Rate limiting
+
+Aggregation
+
+Versioning
+
+API Gateway – LLD:
+
+Filter chains
+
+Token validation
+
+Circuit breaker configs
+
+Request transformation
+
+
+
+
+🔷 Common System Design Patterns (Industry Use) ?
+1️⃣ Layered Architecture Pattern (Basic) : Application ko layers me divide karna. Architecture:
+
+Controller Layer
+   |
+Service Layer
+   |
+Repository / DAO Layer
+   |
+Database
+
+2️⃣ Microservices Architecture Pattern ⭐ (Most Important) :
+Application ko small independent services me tod dena.Full Architecture:
+
+Client
+  |
+  v
+Load Balancer
+  |
+  v
+API Gateway
+  |
+  +-------------------+
+  |                   |
+User Service     Order Service     Payment Service
+  |                   |                   |
+ User DB           Order DB           Payment DB
+
+
+
+
+1. vertical scalling ?
+vertical scalling me aap apne physical server/ computer ke resources ko increase krte ho.
+it has one problem that is down time:- chlti machine ke resources ko increase/add nhi kr skte.
+solution: doing horizental scalling.
+
+2. horizental scalling :- isme aap same server ke replica ko add krte ho, but dns always has fixed ip to even replica krne ke bad v client ka request dns ko hee jayega isliye ek or server
+   add krte hai jo loadbalancer (jo ki design pattern hota h) hota h, jo decide krta hai kon se replica ko request jayega.
+ DNS (Domain Name System):-Human-readable name → Machine-readable IP address eg- www.paytm.com  →  34.120.45.67 :- Hum website ka naam yaad rakhte hain,computer/server ko IP address chahiye.
+                           DNS ke pass us domain ka ip map hota hai.
+
+
+Microservices architecture ke liye design pattern :
+---------------------------------------------------
+
