@@ -23,17 +23,19 @@ actual machine coding krni hoti hai jaise:
 - design API
 - class diagram v bnate hai
 - models ko v btate hai
-
+ 
 let's assume apko netflix jaise system ko / netflix ko design krna hai: jisme millions of people video ko watch kr paye across different simultineously.
 isko requirment ko smjhne ke liye or ache se hme 2 chijo ko smjhna pdega:
-(1) functional requirment :- exact kon sa feature ko build krne ki jarurt hai jise user aa ke use kr ske. jaise:
+(1) functional requirment :- exact kon sa feature ko build krne ki jarurt hai jise user aa ke use kr ske.(what should the system do) jaise:
 - users can signup & login
 - users can buy a subscription
 - user can play & pause the video.
-(2) non-functional requirment :- hmara system kis tarike se perform krega,uske ander kya kya qualities hogi,jaise:
+(2) non-functional requirment :- hmara system kis tarike se perform krega,uske ander kya kya qualities hogi(performance,scalibility),jaise:
 - secure system with authentication / autherization 
 - low latency for video ( video play hone me jyda time n lge).
 - scalable system ( millions of user watch kr paye).
+
+
 
 High level Desgin : step by step component/concept to learn 
 steps 1 : fundamentals
