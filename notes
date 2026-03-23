@@ -16,7 +16,7 @@ Ye code-level pattern (Singleton, Factory) se bada hota hai,Ye poore system ka s
 High level Desing :
 iske ander hum over view of the system ko design krte hai
 - for eg - agr whatsapp design krna hai to kon sa database use kr rhe honge, message queue ko use krenge,cache etc.
-- system ke different-different component ko btate hai ki , kis trh se design hoga. isme koi code nhi krna hota
+- system ke different-different component ko btate hai ki , kis trh se design hoga. isme koi code nhi krna hota 
 
 Low level Desgin:
 actual machine coding krni hoti hai jaise:
@@ -34,6 +34,7 @@ isko requirment ko smjhne ke liye or ache se hme 2 chijo ko smjhna pdega:
 - secure system with authentication / autherization 
 - low latency for video ( video play hone me jyda time n lge).
 - scalable system ( millions of user watch kr paye).
+
 
 
 
