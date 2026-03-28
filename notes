@@ -92,12 +92,12 @@ Diagram level thinking.                                                         
                                              ______________|    |____________
                                             |                                |
           Design Principles ________________|                                |_________________ Design Patterns
-Design principles developers ko guide krta hai to write clean, 
-maintainable, reusable, and scalable code.
-
-🔹 Types of Design Principles 🔹 
-1️⃣ SOLID Principles(Object-Oriented Focused)
-  Note:- OOP provides the concepts, while SOLID provides the guidelines to use those concepts effectively.
+Design principles developers ko guide krta hai to write clean,                   Design Pattern = common problems ke liye ready-made solutions (templates),
+maintainable, reusable, and scalable code.                                       Ye code nahi hota ❌, Ye solution ka idea / structure hota hai ✅.
+                                                                                 Design Pattern ka Purpose,Mostly objects ke creation aur interaction ke liye hi hota hai :
+🔹 Types of Design Principles 🔹                                                                                                                                   Object kaise banega.
+1️⃣ SOLID Principles(Object-Oriented Focused)                                                                                                                       Objects kaise interact karenge.
+  Note:- OOP provides the concepts, while SOLID provides the guidelines to use those concepts effectively.                                                          Structure kaise hoga.
         OOP = Tools (hammer, screwdriver) 🔧.
         SOLID = Rules / Engineering knowledge 🧠.
  🔥 Explanation Of SOLID principles :
@@ -141,7 +141,121 @@ maintainable, reusable, and scalable code.
                             }
      🟢 3. Liskov Substitution Principle (LSP)
                👉 Child class ko parent ki jagah use kar sako bina problem ke.
+                     ❌ Galat Example (LSP Break) :
+                           👉 Parent class me methods define kiye, lekin child unko properly follow nahi kar raha.
+                            class Cat {
+                                void drinkMilk() {
+                                    System.out.println("Cat drinks milk");
+                                }
 
+                                void speak() {
+                                    System.out.println("Meow");
+                                }
+                            }
+
+                            class PetCat extends Cat {
+                                @Override
+                                void drinkMilk() {
+                                    System.out.println("Pet cat drinks milk");
+                                }
+
+                                @Override
+                                void speak() {
+                                    System.out.println("Meow Meow");
+                                }
+                            }
+
+                            class ToyCat extends Cat {
+                                @Override
+                                void drinkMilk() {
+                                    throw new RuntimeException("Toy cat can't drink milk ❌");
+                                }
+
+                                @Override
+                                void speak() {
+                                    throw new RuntimeException("Toy cat can't speak ❌");
+                                }
+                            }
+                                🔴 Problem kya hai?
+                                - ToyCat actually real cat nahi hai
+                                - Lekin fir bhi Cat ko extend kar raha hai
+                                - Parent ke methods ko properly follow nahi kar raha
+                                👉 Agar kahin aisa code ho:
+                                                     Cat cat = new ToyCat();
+                                                     cat.drinkMilk();  // 💥 Runtime error
+                                👉 Matlab:
+                                        Child ko parent ki jagah use kiya → program toot gaya ❌, LSP violate ho gaya.
+     🟢 4. Interface Segregation Principle (ISP)
+               👉 Client ko wo methods implement karne ke liye force mat karo jo use nahi chahiye.
+                     ❌ Galat:
+                            interface Worker {
+                                void work();
+                                void eat();
+                            }
+
+                            class Robot implements Worker {
+                                public void work() { }
+                                public void eat() { } // useless ❌
+                            }
+                     ✅ Sahi:
+                            interface Workable {
+                                void work();
+                            }
+
+                            interface Eatable {
+                                void eat();
+                            }
+     🟢 5. Dependency Inversion Principle (DIP)
+               👉 High-level class low-level class pe depend na kare — dono abstraction pe depend karein.
+                     ❌ Galat:
+                            class Employee {
+                                void work() {
+                                    System.out.println("Employee working");
+                                }
+                            }
+
+                            class CEO {
+                                Employee emp = new Employee();  // ❌ direct dependency
+
+                                void manage() {
+                                    emp.work();
+                                }
+                            }
+                            🔴 Problem:
+                            CEO directly Employee pe depend hai ❌
+                            Agar kal Employee change hua → CEO ka code bhi change ❌
+                            👉 Tight coupling 😵
+                     ✅ Sahi:
+                            interface Worker {
+                                void work();
+                            }
+
+                            class Employee implements Worker {
+                                public void work() {
+                                    System.out.println("Employee working");
+                                }
+                            }
+
+                            class Manager implements Worker {
+                                public void work() {
+                                    System.out.println("Manager managing");
+                                }
+                            }
+
+                            class CEO {
+                                Worker worker;   // ✅ abstraction use
+
+                                CEO(Worker worker) {
+                                    this.worker = worker;
+                                }
+
+                                void manage() {
+                                    worker.work();
+                                }
+                            }
+                            ✅ Solution 
+                                👉 CEO ab directly Employee pe depend nahi hai
+                                👉 CEO sirf Worker (interface) ko jaanta hai
 2️⃣ Other Key Principles :
                  DRY → Don’t Repeat Yourself
                                  - Duplicate code avoid karna
@@ -154,9 +268,144 @@ maintainable, reusable, and scalable code.
 
 
 
+🔹 Design Patterns ke Types (3 Main Categories) 🔹
+
+          🟢 1. Creational Design Patterns
+                    👉 Object kaise banayein (creation logic)
+                               Examples:
+                                      Singleton
+                                      Factory
+                                      Abstract Factory
+                                      Builder
+                                      Prototype
+          🟡 2. Structural Design Patterns
+                    👉 Objects ko kaise arrange / structure karein
+                               Examples:
+                                      Adapter
+                                      Decorator
+                                      Facade
+                                      Proxy
+                                      Composite
+          🔵 3. Behavioral Design Patterns
+                    👉 Objects ka behavior & communication kaise hoga
+                               Examples:
+                                      Observer
+                                      Strategy
+                                      Command
+                                      State
+                                      Iterator
 
 
+                                                                  🔹 Creational Design Pattern 🔹  
 
+🟢 1. Singleton Pattern
+👉 Ek hi object poore application me exist kare.
+    Use:
+        Database connection
+        Logger
+        Configuration
+Ex-
+
+class DBConnection {
+
+    private static DBConnection instance;
+    private Connection connection;
+
+    // Private constructor
+    private DBConnection() {
+        try {
+            String url = "jdbc:mysql://localhost:3306/mydb";
+            String username = "root";
+            String password = "password";
+
+            connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Database Connected ✅");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Singleton method
+    public static DBConnection getInstance() {
+        if (instance == null) {
+            instance = new DBConnection();
+        }
+        return instance;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+}
+
+ 🔹 Singleton ke multiple types (implementations)
+  1.1 Early Initialization (Eager Loading)
+       👉 Object pehle hi bana diya jata hai (class load hote hi)
+Ex - 
+class Singleton {
+    private static final Singleton instance = new Singleton();
+
+    private Singleton() { }
+
+    public static Singleton getInstance() {
+        return instance;
+    }
+}
+
+  1.2 Lazy Initialization (On-Demand)
+       👉 Object tab banta hai jab first time zarurat ho
+Ex - 
+class Singleton {
+    private static Singleton instance;
+
+    private Singleton() { }
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+
+  1.3 Double-Checked Locking (Best Practical)
+Ex - 
+class Singleton {
+    private static volatile Singleton instance;
+
+    private Singleton() { }
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+
+1.4 Enum Singleton (Most Secure 🔥)
+Ex - 
+enum Singleton {
+    INSTANCE;
+
+    public void show() {
+        System.out.println("Hello Singleton");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+
+        // Access enum singleton
+        Singleton singleton = Singleton.INSTANCE;
+
+        singleton.show();   // method call  / or direct way Singleton.INSTANCE.show();
+    }
+}
 
 
 High level Desgin : step by step component/concept to learn 
