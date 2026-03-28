@@ -72,17 +72,14 @@ jaise:
                                             |                                |
                         HLD ________________|                                |_________________ LLD
 
-1. High level Desing :
-iske ander hum over view of the system ko design krte hai, Diagram level thinking.
-- for eg - agr whatsapp design krna hai to kon sa database use kr rhe honge, message queue ko use krenge,cache etc.
-- system ke different-different component ko btate hai ki , kis trh se design hoga. isme koi code nhi krna hota. 
+1. High level Desing :                                                                          2. Low level Desgin:
+iske ander hum over view of the system ko design krte hai,                                         actual machine coding krni it includes :
+Diagram level thinking.                                                                                                               - Classes & objects
+- for eg - agr whatsapp design krna hai to kon sa database use kr rhe honge,                                                          - Design patterns (Singleton, Factory)
+           message queue ko use krenge,cache etc.                                                                                     - DB schema
+- system ke different-different component ko btate hai ki ,                                                                           - API structure
+        kis trh se design hoga. isme koi code nhi krna hota. 
 
-2. Low level Desgin:
-actual machine coding krni it includes :
-- Classes & objects
-- Design patterns (Singleton, Factory)
-- DB schema
-- API structure
 
 
 
@@ -100,6 +97,51 @@ maintainable, reusable, and scalable code.
 
 🔹 Types of Design Principles 🔹 
 1️⃣ SOLID Principles(Object-Oriented Focused)
+  Note:- OOP provides the concepts, while SOLID provides the guidelines to use those concepts effectively.
+        OOP = Tools (hammer, screwdriver) 🔧.
+        SOLID = Rules / Engineering knowledge 🧠.
+ 🔥 Explanation Of SOLID principles :
+               S → Single Responsibility Principle (SRP)
+               O → Open/Closed Principle (OCP)
+               L → Liskov Substitution Principle (LSP)
+               I → Interface Segregation Principle (ISP)
+               D → Dependency Inversion Principle (DIP)
+     🟢 1. Single Responsibility Principle (SRP) 
+               👉 Ek class ka sirf ek hi kaam hona chahiye.
+                     ❌ Galat:
+                            class UserService {
+                             void saveUser() { }
+                             void sendEmail() { }
+                            }
+                     ✅ Sahi:
+                            class UserService {
+                             void saveUser() { }
+                            }
+
+                            class EmailService {
+                             void sendEmail() { }
+                            }
+     🟢 2. Open/Closed Principle (OCP)
+               👉 Code open hona chahiye extension ke liye,
+                   but closed hona chahiye modification ke liye.
+                   Matlab:
+                    Existing code ko change na karo ❌
+                    Naya feature add karna ho → new class banao ✅
+                     ✅ Ex -
+                            interface Payment {
+                               void pay();
+                            }
+
+                            class CreditCardPayment implements Payment {
+                                public void pay() { }
+                            }
+
+                            class UpiPayment implements Payment {
+                                public void pay() { }
+                            }
+     🟢 3. Liskov Substitution Principle (LSP)
+               👉 Child class ko parent ki jagah use kar sako bina problem ke.
+
 2️⃣ Other Key Principles :
                  DRY → Don’t Repeat Yourself
                                  - Duplicate code avoid karna
@@ -110,7 +152,6 @@ maintainable, reusable, and scalable code.
                  Composition over Inheritance
                                  - Class behavior ke liye inheritance ki bajaye composition use karo
 
-1 : 34 minutes.
 
 
 
