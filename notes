@@ -408,8 +408,256 @@ public class Main {
 }
 
 
-3 hrs
 
+
+🟢 2. Factory Pattern
+👉 Object create karne ki responsibility client se hata ke factory class ko de di jati hai.
+👉 Client ko exact class ka naam ya creation logic nahi pata hota — wo sirf factory se object maangta hai.
+📌 Use Cases:
+Jab multiple similar objects create karne ho
+Jab object creation complex ho
+Jab runtime pe decide karna ho kaunsa object banana hai
+Example:
+Payment system (UPI / Card / NetBanking)
+Notification (Email / SMS / Push)
+
+ 🔹 Factory ke multiple types (implementations)
+
+2.1 Simple Factory  :
+👉 Ek hi factory class hoti hai jo input ke basis par different objects create karti hai.
+👉 ❗ Yaha if-else DIRECT object create karne ke liye use hota hai.
+❌ OCP Violation hota hai isme, Kal agar naya type aaye: else if(type.equalsIgnoreCase("WALLET")) {return new WalletPayment();} firse add krna hoga existing code me.
+🔸Code - 
+1. Common Interface :
+
+interface Payment {
+    void pay(double amount);
+}
+
+2. Concrete Classes :
+class UpiPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println("Paid " + amount + " using UPI");
+    }
+}
+
+class CardPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println("Paid " + amount + " using Card");
+    }
+}
+
+class NetBankingPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println("Paid " + amount + " using NetBanking");
+    }
+}
+
+3. Factory Class ⭐ (Main Part) :
+class PaymentFactory {
+
+    public static Payment getPayment(String type) {
+
+        if(type == null) return null;
+
+         // ❗ if-else yaha DIRECT object create kar raha hai
+        if(type.equalsIgnoreCase("UPI")) {
+            return new UpiPayment();
+        } 
+        else if(type.equalsIgnoreCase("CARD")) {
+            return new CardPayment();
+        } 
+        else if(type.equalsIgnoreCase("NETBANKING")) {
+            return new NetBankingPayment();
+        }
+
+        return null;
+    }
+}
+
+4. Client Code (Use) :
+public class Main {
+    public static void main(String[] args) {
+
+        Payment payment = PaymentFactory.getPayment("UPI");
+        payment.pay(1000);
+
+        payment = PaymentFactory.getPayment("CARD");
+        payment.pay(2000);
+    }
+}
+
+
+2.2 Factory Method Pattern
+👉 Har product ke liye alag factory class hoti hai
+👉 Object creation subclasses handle karti hain
+👉 ❗ Yaha object creation me if-else NAHI hota.
+👉 ⚠ Agar if-else hota bhi hai to sirf factory choose karne ke liye hota hai (client side).
+✔ OCP follow karta hai
+🔸 Code - 
+// 1. Product Interface
+interface Payment {
+    void pay(int amount);
+}
+
+// 2. Concrete Products
+class UpiPayment implements Payment {
+    public void pay(int amount) {
+        System.out.println("UPI Payment: " + amount);
+    }
+}
+
+class CardPayment implements Payment {
+    public void pay(int amount) {
+        System.out.println("Card Payment: " + amount);
+    }
+}
+
+// 3. Factory Interface
+interface PaymentFactory {
+    Payment createPayment();
+}
+
+// 4. Concrete Factories
+class UpiFactory implements PaymentFactory {
+    public Payment createPayment() {
+        return new UpiPayment(); // ✔ direct object creation (no if-else)
+    }
+}
+
+class CardFactory implements PaymentFactory {
+    public Payment createPayment() {
+        return new CardPayment(); // ✔ direct object creation (no if-else)
+    }
+}
+
+// 5. Client (Runtime Decision)
+public class Main {
+    public static void main(String[] args) {
+
+        String type = "UPI"; // runtime input
+
+        PaymentFactory factory;
+
+        // ⚠ Yaha if-else sirf factory choose karne ke liye hai
+        if(type.equalsIgnoreCase("UPI")) {
+            factory = new UpiFactory();
+        } 
+        else if(type.equalsIgnoreCase("CARD")) {
+            factory = new CardFactory();
+        } 
+        else {
+            throw new IllegalArgumentException("Invalid type");
+        }
+
+        // ✔ Actual object creation subclass me ho raha hai
+        Payment payment = factory.createPayment();
+        payment.pay(1000);
+    }
+}
+
+
+2.3 Abstract Factory Pattern
+👉 Ye Factory Method ka next level hai
+👉 Ek factory → multiple related objects create karti hai (family of objects)
+👉 ✔ OCP follow karta hai
+👉 ✔ Highly scalable
+🔸 Code - 
+// 1. Payment Interface
+interface Payment {
+    void pay(int amount);
+}
+
+// 2. Notification Interface
+interface Notification {
+    void send();
+}
+
+// 3. Concrete Payment Classes
+class UpiPayment implements Payment {
+    public void pay(int amount) {
+        System.out.println("UPI Payment: " + amount);
+    }
+}
+
+class CardPayment implements Payment {
+    public void pay(int amount) {
+        System.out.println("Card Payment: " + amount);
+    }
+}
+
+// 4. Concrete Notification Classes
+class SmsNotification implements Notification {
+    public void send() {
+        System.out.println("SMS Sent");
+    }
+}
+
+class EmailNotification implements Notification {
+    public void send() {
+        System.out.println("Email Sent");
+    }
+}
+
+// 5. Abstract Factory
+interface AbstractFactory {
+    Payment createPayment();
+    Notification createNotification();
+}
+
+// 6. Concrete Factories
+class UpiFactory implements AbstractFactory {
+
+    public Payment createPayment() {
+        return new UpiPayment();
+    }
+
+    public Notification createNotification() {
+        return new SmsNotification();
+    }
+}
+
+class CardFactory implements AbstractFactory {
+
+    public Payment createPayment() {
+        return new CardPayment();
+    }
+
+    public Notification createNotification() {
+        return new EmailNotification();
+    }
+}
+
+// 7. Client (Runtime Decision with if-else)
+public class Main {
+    public static void main(String[] args) {
+
+        String type = "UPI"; // runtime input (user/API/db)
+
+        AbstractFactory factory;
+
+        // ✔ if-else sirf factory choose karne ke liye hai
+        if(type.equalsIgnoreCase("UPI")) {
+            factory = new UpiFactory();
+        } 
+        else if(type.equalsIgnoreCase("CARD")) {
+            factory = new CardFactory();
+        } 
+        else {
+            throw new IllegalArgumentException("Invalid type");
+        }
+
+        // ✔ Object creation factories ke andar ho raha hai
+        Payment payment = factory.createPayment();
+        Notification notification = factory.createNotification();
+
+        payment.pay(1000);
+        notification.send();
+    }
+}
+
+
+3 hrs 37 minutes
 
 High level Desgin : step by step component/concept to learn 
 steps 1 : fundamentals
