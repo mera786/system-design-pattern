@@ -773,6 +773,157 @@ Request transformation
 
 
 
+
+🖥️ Server kya hota hai?
+Server ek power ful computer ya system hota hai jo dusre computers (clients) ko service deta hai.
+📱 Real-life example:
+Tum browser me YouTube open karte ho
+Tumhara laptop/mobile = Client
+YouTube ka system = Server
+👉 Tum request bhejte ho → Server response deta hai (video, data, etc.)
+
+
+🧩 IT me Server ke Types
+
+1. 🌐 Web Server
+Website serve karta hai
+Example: HTML pages bhejna
+Ex: Apache, Nginx
+
+2. 📦 Application Server
+Business logic handle karta hai
+Backend code run karta hai (Java Spring Boot etc.)
+👉 Tum jo Java backend bana rahe ho → wo application server pe run hota hai
+
+
+3. 🗄️ Database Server
+Data store karta hai
+Example: MySQL, PostgreSQL
+
+4. 📁 File Server
+Files store aur share karta hai
+
+5. 📧 Mail Server
+Emails handle karta hai
+
+
+
+⚙️ Serverful vs Serverless (IMPORTANT 🔥)
+
+🏗️ 1. Serverful kya hota hai?
+👉 Isme tumhe server manage karna padta hai
+✔ Tum kya handle karte ho:
+Server setup
+CPU, RAM manage
+Scaling
+Deployment
+Maintenance.
+📌 Example:
+Tum AWS EC2 pe server lete ho
+Usme Java app deploy karte ho
+✅ Advantages (Serverful)
+Full control (OS, memory, config)
+Customization possible
+Long-running apps ke liye best.
+❌ Disadvantages (Serverful)
+Maintenance ka tension 😓
+Scaling manually karna padta hai
+Cost waste ho sakta hai (idle server bhi charge hota hai).
+
+⚡ 2. Serverless kya hota hai?
+👉 Serverless me bhi server hota hai, but tumhe manage nahi karna padta
+👉 Cloud provider sab handle karta hai
+✔ Tum kya karte ho:
+Sirf code likhte ho
+Baaki sab automatic (scaling, deployment, infra)
+📌 Example:
+AWS Lambda
+Firebase Functions.
+✅ Advantages (Serverless)
+No server management 🚀
+Auto scaling (traffic aaye ya na aaye)
+Pay only when used 💰
+Fast development
+❌ Disadvantages (Serverless)
+Limited control
+Cold start issue (first request slow)
+Long-running tasks ke liye ideal nahi
+Vendor lock-in (AWS pe dependent ho jaoge).
+
+
+⚙️ Scaling kya hota hai?
+👉 Jab users ya traffic badhta hai, to system ko strong banana padta hai Is process ko Scaling bolte hain.
+
+
+🧱 1. Vertical Scaling (Scale UP) kya hota hai?
+👉 Ek hi machine ko powerful banana
+📌 Example:
+RAM increase (8GB → 32GB)
+CPU upgrade
+Storage badhana.
+🧠 Real-life example:
+Socho:
+Tum ek dukaan chala rahe ho
+Customers badh gaye
+👉 Tum ek hi dukaan ko bada kar dete ho (AC, zyada staff, bada space)
+✅ Advantages
+Simple implementation 👍
+Code change ki zarurat nahi
+Easy to manage
+❌ Disadvantages
+Limit hoti hai (kitna upgrade karoge?)
+Expensive 💰
+Single point of failure ⚠️ (server down = sab down)
+
+🌐 2. Horizontal Scaling (Scale OUT) kya hota hai?
+👉 Multiple servers add karna
+📌 Example:
+1 server → 5 servers
+Load balancer use karke traffic distribute
+🧠 Real-life example:
+Ek dukaan ki jagah 5 dukaan khol li
+👉 Customers alag-alag jagah serve ho rahe hain
+✅ Advantages
+Highly scalable 🚀
+Fault tolerant (1 server down → baaki chalte rahenge)
+High traffic ke liye best (like Flipkart, Amazon)
+❌ Disadvantages
+Complex setup 😓
+Load balancing required
+Distributed system handle karna padta hai
+
+
+------------------------------------THREAD-----------------
+🧠 Task kya hota hai (Computer me)?
+👉 Task = koi bhi kaam jo computer perform karta hai
+🍽️ Real-life example
+Socho tum:
+YouTube dekh rahe ho 🎥
+Background me file download ho rahi hai 📥
+Music bhi chal raha hai 🎵
+👉 Ye teeno alag-alag tasks hain.
+Computer me task ka matlab ho sakta hai:
+Ek program run hona
+Ek process
+Ek thread ka kaam
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 🔷 Common System Design Patterns (Industry Use) ?
 1️⃣ Layered Architecture Pattern (Basic) : Application ko layers me divide karna. Architecture:
 
@@ -804,17 +955,4 @@ User Service     Order Service     Payment Service
 
 
 
-1. vertical scalling ?
-vertical scalling me aap apne physical server/ computer ke resources ko increase krte ho.
-it has one problem that is down time:- chlti machine ke resources ko increase/add nhi kr skte.
-solution: doing horizental scalling.
-
-2. horizental scalling :- isme aap same server ke replica ko add krte ho, but dns always has fixed ip to even replica krne ke bad v client ka request dns ko hee jayega isliye ek or server
-   add krte hai jo loadbalancer (jo ki design pattern hota h) hota h, jo decide krta hai kon se replica ko request jayega.
- DNS (Domain Name System):-Human-readable name → Machine-readable IP address eg- www.paytm.com  →  34.120.45.67 :- Hum website ka naam yaad rakhte hain,computer/server ko IP address chahiye.
-                           DNS ke pass us domain ka ip map hota hai.
-
-
-Microservices architecture ke liye design pattern :
----------------------------------------------------
 
